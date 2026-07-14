@@ -11,7 +11,8 @@ final class MessageVariant {
 		private readonly string $subject,
 		private readonly string $bodyText,
 		private readonly string $bodyHtml = '',
-		private readonly bool $enabled = true
+		private readonly bool $enabled = true,
+		private readonly bool $fallback = false
 	) {}
 
 	public function getId(): string { return $this->id; }
@@ -21,4 +22,5 @@ final class MessageVariant {
 	public function getBodyText(): string { return $this->bodyText; }
 	public function getBodyHtml(): string { return $this->bodyHtml; }
 	public function isEnabled(): bool { return $this->enabled; }
+	public function isFallback(): bool { return $this->fallback; }
 }

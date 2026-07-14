@@ -14,6 +14,8 @@ interface IMessageVariantRepository {
 
 	public function getForTemplate(string $templateId, string $language): ?MessageVariant;
 
+	public function getFallbackForTemplate(string $templateId): ?MessageVariant;
+
 	public function delete(string $id): void;
 
 	/**
