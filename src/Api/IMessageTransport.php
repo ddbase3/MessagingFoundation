@@ -11,6 +11,8 @@ interface IMessageTransport extends IBase, ISchemaProvider {
 
 	public function getLabel(): string;
 
+	public function getSettingsSummary(array $settings = []): string;
+
 	public function supports(Message $message, array $settings = []): bool;
 
 	public function send(Message $message, array $settings = []): MessageDeliveryResult;
