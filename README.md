@@ -1565,3 +1565,9 @@ It does not provide:
 Use MessagingFoundation when building consumer plugins or implementation plugins that need a shared messaging vocabulary.
 
 Use MessageHub when you need the concrete queue-first messaging implementation.
+
+
+## Documentation
+
+- [Frequently Asked Questions](docs/faq.md)
+- [Privacy and data processing](PRIVACY.md)
