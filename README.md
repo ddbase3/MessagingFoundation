@@ -17,9 +17,9 @@ It exists so that consumer plugins can depend on one small, neutral contract lay
 A consumer plugin should be able to say:
 
 ```php
-use MessagingFoundation\Api\IMessageService;
-use MessagingFoundation\Api\IMessageRenderer;
-use MessagingFoundation\Dto\MessageAddress;
+use Base3\MessagingFoundation\Api\IMessageService;
+use Base3\MessagingFoundation\Api\IMessageRenderer;
+use Base3\MessagingFoundation\Dto\MessageAddress;
 ```
 
 without knowing how the message is queued, delivered, retried or logged.
@@ -146,7 +146,7 @@ Only PHP classes under `src/` are relevant for BASE3 discovery.
 The plugin class is:
 
 ```php
-MessagingFoundation\MessagingFoundationPlugin
+Base3\MessagingFoundation\MessagingFoundationPlugin
 ```
 
 Technical name:
@@ -164,8 +164,8 @@ Example:
 
 namespace MessagingFoundation;
 
-use Base3\Api\IContainer;
-use Base3\Api\IPlugin;
+use Base3\CoreFoundation\Api\IContainer;
+use Base3\CoreFoundation\Api\IPlugin;
 
 final class MessagingFoundationPlugin implements IPlugin {
 
@@ -200,7 +200,7 @@ A `Message` is the runtime representation of a message to be queued or delivered
 Class:
 
 ```php
-MessagingFoundation\Dto\Message
+Base3\MessagingFoundation\Dto\Message
 ```
 
 A message contains:
@@ -240,7 +240,7 @@ withMetadata(array $metadata, bool $merge = true): self
 Class:
 
 ```php
-MessagingFoundation\Dto\MessageAddress
+Base3\MessagingFoundation\Dto\MessageAddress
 ```
 
 Represents one recipient address.
@@ -264,7 +264,7 @@ new MessageAddress('to', 'jane@example.org', 'Jane Doe');
 Class:
 
 ```php
-MessagingFoundation\Dto\MessageAttachment
+Base3\MessagingFoundation\Dto\MessageAttachment
 ```
 
 Represents an attachment reference.
@@ -306,7 +306,7 @@ new MessageAttachment(
 Class:
 
 ```php
-MessagingFoundation\Dto\MessageTemplate
+Base3\MessagingFoundation\Dto\MessageTemplate
 ```
 
 A template describes a message type and scope.
@@ -329,7 +329,7 @@ The concrete storage is implementation-specific.
 Class:
 
 ```php
-MessagingFoundation\Dto\MessageVariant
+Base3\MessagingFoundation\Dto\MessageVariant
 ```
 
 A variant contains renderable content for a template, usually per language.
@@ -349,7 +349,7 @@ It contains:
 Class:
 
 ```php
-MessagingFoundation\Dto\QueuedMessage
+Base3\MessagingFoundation\Dto\QueuedMessage
 ```
 
 Represents a message after it has been placed into a queue.
@@ -368,7 +368,7 @@ It contains:
 Class:
 
 ```php
-MessagingFoundation\Dto\MessageDeliveryResult
+Base3\MessagingFoundation\Dto\MessageDeliveryResult
 ```
 
 Represents the result returned by a transport.
@@ -403,7 +403,7 @@ return new MessageDeliveryResult(
 High-level message service used by consumer plugins.
 
 ```php
-MessagingFoundation\Api\IMessageService
+Base3\MessagingFoundation\Api\IMessageService
 ```
 
 Methods:
@@ -443,7 +443,7 @@ $queueId = $messageService->enqueue($message, 'phpmailer');
 Queue-level service.
 
 ```php
-MessagingFoundation\Api\IMessageQueueService
+Base3\MessagingFoundation\Api\IMessageQueueService
 ```
 
 Methods:
@@ -469,7 +469,7 @@ Consumer plugins usually use `IMessageService` instead.
 Renders a message type and context into a `Message` DTO.
 
 ```php
-MessagingFoundation\Api\IMessageRenderer
+Base3\MessagingFoundation\Api\IMessageRenderer
 ```
 
 Method:
@@ -509,7 +509,7 @@ $message = $message->withRecipient(
 Looks up available transports.
 
 ```php
-MessagingFoundation\Api\IMessageTransportRegistry
+Base3\MessagingFoundation\Api\IMessageTransportRegistry
 ```
 
 Methods:
@@ -531,7 +531,7 @@ Implementation plugins use this to route messages to real transports.
 Synchronizes discoverable message type providers into implementation-specific templates and variants.
 
 ```php
-MessagingFoundation\Api\IMessageTypeSynchronizationService
+Base3\MessagingFoundation\Api\IMessageTypeSynchronizationService
 ```
 
 Methods:
@@ -562,7 +562,7 @@ Concrete implementations live in an implementation plugin such as `MessageHub`.
 ### 7.1 `IMessageTemplateRepository`
 
 ```php
-MessagingFoundation\Api\IMessageTemplateRepository
+Base3\MessagingFoundation\Api\IMessageTemplateRepository
 ```
 
 Responsible for storing and retrieving `MessageTemplate` DTOs.
@@ -582,7 +582,7 @@ page(array $request): array
 ### 7.2 `IMessageVariantRepository`
 
 ```php
-MessagingFoundation\Api\IMessageVariantRepository
+Base3\MessagingFoundation\Api\IMessageVariantRepository
 ```
 
 Responsible for storing and retrieving `MessageVariant` DTOs.
@@ -602,7 +602,7 @@ page(array $request): array
 ### 7.3 `IMessageQueueRepository`
 
 ```php
-MessagingFoundation\Api\IMessageQueueRepository
+Base3\MessagingFoundation\Api\IMessageQueueRepository
 ```
 
 Responsible for queue storage.
@@ -622,7 +622,7 @@ page(array $request): array
 ### 7.4 `IMessageDeliveryRepository`
 
 ```php
-MessagingFoundation\Api\IMessageDeliveryRepository
+Base3\MessagingFoundation\Api\IMessageDeliveryRepository
 ```
 
 Responsible for delivery log storage.
@@ -647,7 +647,7 @@ A transport sends a rendered message.
 Interface:
 
 ```php
-MessagingFoundation\Api\IMessageTransport
+Base3\MessagingFoundation\Api\IMessageTransport
 ```
 
 It extends BASE3 discoverability and schema capabilities.
@@ -687,9 +687,9 @@ Transport names should be stable, lowercase technical identifiers.
 
 namespace ExamplePlugin\Transport;
 
-use MessagingFoundation\Api\IMessageTransport;
-use MessagingFoundation\Dto\Message;
-use MessagingFoundation\Dto\MessageDeliveryResult;
+use Base3\MessagingFoundation\Api\IMessageTransport;
+use Base3\MessagingFoundation\Dto\Message;
+use Base3\MessagingFoundation\Dto\MessageDeliveryResult;
 
 final class ExampleTransport implements IMessageTransport {
 
@@ -738,7 +738,7 @@ A message type provider describes one kind of message.
 Interface:
 
 ```php
-MessagingFoundation\Api\IMessageTypeProvider
+Base3\MessagingFoundation\Api\IMessageTypeProvider
 ```
 
 Methods:
@@ -770,7 +770,7 @@ Message type providers are usually implemented by consumer plugins.
 
 namespace ExamplePlugin\Message;
 
-use MessagingFoundation\Api\IMessageTypeProvider;
+use Base3\MessagingFoundation\Api\IMessageTypeProvider;
 
 final class ExampleWelcomeMessageTypeProvider implements IMessageTypeProvider {
 
@@ -845,7 +845,7 @@ Implementation plugins may fire these events through `IEventManager`.
 Class:
 
 ```php
-MessagingFoundation\Event\MessageQueuedEvent
+Base3\MessagingFoundation\Event\MessageQueuedEvent
 ```
 
 Purpose:
@@ -865,7 +865,7 @@ getQueueId(): string
 Class:
 
 ```php
-MessagingFoundation\Event\MessageSentEvent
+Base3\MessagingFoundation\Event\MessageSentEvent
 ```
 
 Purpose:
@@ -886,7 +886,7 @@ getDeliveryId(): string
 Class:
 
 ```php
-MessagingFoundation\Event\MessageFailedEvent
+Base3\MessagingFoundation\Event\MessageFailedEvent
 ```
 
 Purpose:
@@ -927,7 +927,7 @@ Events should be used for small, synchronous reactions. Slow follow-up work shou
 Base exception:
 
 ```php
-MessagingFoundation\Exception\MessageException
+Base3\MessagingFoundation\Exception\MessageException
 ```
 
 Use this for general messaging errors.
@@ -937,7 +937,7 @@ Use this for general messaging errors.
 Exception:
 
 ```php
-MessagingFoundation\Exception\MessageTransportNotFoundException
+Base3\MessagingFoundation\Exception\MessageTransportNotFoundException
 ```
 
 Use this when a requested transport does not exist or cannot be resolved.
@@ -963,9 +963,9 @@ Example:
 
 namespace ExamplePlugin\Service;
 
-use MessagingFoundation\Api\IMessageRenderer;
-use MessagingFoundation\Api\IMessageService;
-use MessagingFoundation\Dto\MessageAddress;
+use Base3\MessagingFoundation\Api\IMessageRenderer;
+use Base3\MessagingFoundation\Api\IMessageService;
+use Base3\MessagingFoundation\Dto\MessageAddress;
 
 final class ExampleNotificationService {
 
@@ -1286,17 +1286,17 @@ Avoid service locator lookups inside domain logic.
 Consumer plugins should avoid depending on:
 
 ```php
-MessageHub\Service\MessageService
-MessageHub\Repository\DatabaseMessageQueueRepository
+Base3\MessageHub\Service\MessageService
+Base3\MessageHub\Repository\DatabaseMessageQueueRepository
 Base3IliasLab\Messaging\PhpMailerMessageTransport
 ```
 
 Use:
 
 ```php
-MessagingFoundation\Api\IMessageService
-MessagingFoundation\Api\IMessageRenderer
-MessagingFoundation\Api\IMessageTransport
+Base3\MessagingFoundation\Api\IMessageService
+Base3\MessagingFoundation\Api\IMessageRenderer
+Base3\MessagingFoundation\Api\IMessageTransport
 ```
 
 ---
@@ -1310,9 +1310,9 @@ A project plugin can provide a transport:
 
 namespace ProjectPlugin\Messaging;
 
-use MessagingFoundation\Api\IMessageTransport;
-use MessagingFoundation\Dto\Message;
-use MessagingFoundation\Dto\MessageDeliveryResult;
+use Base3\MessagingFoundation\Api\IMessageTransport;
+use Base3\MessagingFoundation\Dto\Message;
+use Base3\MessagingFoundation\Dto\MessageDeliveryResult;
 
 final class WebhookMessageTransport implements IMessageTransport {
 
@@ -1367,7 +1367,7 @@ An implementation plugin can discover this class and offer it as an available tr
 
 namespace CoursePlugin\Message;
 
-use MessagingFoundation\Api\IMessageTypeProvider;
+use Base3\MessagingFoundation\Api\IMessageTypeProvider;
 
 final class CourseRegistrationMessageTypeProvider implements IMessageTypeProvider {
 

@@ -50,7 +50,7 @@ The foundation does not define a locking algorithm, retry strategy, database sch
 
 ## What is a `Message`?
 
-`MessagingFoundation\Dto\Message` is the immutable runtime representation of a rendered message.
+`Base3\MessagingFoundation\Dto\Message` is the immutable runtime representation of a rendered message.
 
 It can contain:
 
